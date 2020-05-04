@@ -6,14 +6,15 @@ import { rtdbPlugin } from 'vuefire';
 import Buefy from 'buefy';
 import 'buefy/dist/buefy.css'
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationCircle, faCheck, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 // app files
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import './validations';
 
-library.add(faUserCircle);
+library.add(faExclamationCircle, faCheck, faUserCircle);
 Vue.component('vue-fontawesome', FontAwesomeIcon);
 Vue.use(Buefy, {
   defaultIconComponent: 'vue-fontawesome',
