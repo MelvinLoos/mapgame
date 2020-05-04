@@ -20,7 +20,7 @@
                 </ValidationProvider>
 
                 <ValidationObserver>
-                  <ValidationProvider rules="required|password:@confirm" v-slot="{ errors, valid }">
+                  <ValidationProvider rules="required|min:6|password:@confirm" v-slot="{ errors, valid }">
                     <b-field
                       label="Password"
                       :type="{ 'is-danger': errors[0], 'is-success': valid }"

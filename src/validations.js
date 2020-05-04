@@ -1,7 +1,9 @@
 import { extend } from "vee-validate";
-import { required, email, between } from "vee-validate/dist/rules";
+import { required, min, email } from "vee-validate/dist/rules";
 
 extend('required', required);
+
+extend('min', min);
 
 extend('email', email);
 
@@ -15,7 +17,6 @@ extend('password', {
 
 extend('startingLocation', {
     validate(value) {
-        console.log(value);
         return (value => value[0] >= -180 && value[0] <= 180 && value[1] >= -90 && value[1] <= 90);
     },
     message: 'Value must be a valid location'
