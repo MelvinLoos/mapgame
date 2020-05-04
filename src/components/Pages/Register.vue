@@ -101,7 +101,7 @@ export default {
     const locations = [
       {
         id: 1,
-        coordinate: [51.9244, 4.4777],
+        coordinate: [4.4777, 51.9244],
         name: "Rotterdam"
       }
     ];
