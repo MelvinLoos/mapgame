@@ -3,7 +3,7 @@
     <Map 
       id="gamemap"
       :coordinates="userCoordinates"
-      :userColor="userColor"
+      :userId="id"
       :users="users"
     />
     <nav id="actionbar-bottom" class="navbar" role="navigation" aria-label="game navigation">
@@ -44,7 +44,7 @@ export default {
   data() {
     return {
       user: null,
-      users: [],
+      users: null,
       movementIncrement: 0.0001
     };
   },
@@ -57,20 +57,13 @@ export default {
         return [this.user.latitude, this.user.longitude];
       }
       return [0, 0];
-    },
-    userColor: function() {
-      if (!this.id) return '#FFFFFF';
-      return '#' + intToRGB(hashCode(this.id));
-    },
+    }
   },
   created: function() {
     let that = this;
     this.$db.ref('users').on('value', function (snapshot) {
       if (!snapshot.val()) return;
-      that.users = Array(snapshot.val()).filter(function (val) {
-        // filter out the current user
-        return !val.hasOwnProperty(that.id);
-      });
+      that.users = snapshot.val();
     });
   },
   watch: {
