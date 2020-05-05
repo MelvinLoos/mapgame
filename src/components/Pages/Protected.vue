@@ -63,7 +63,10 @@ export default {
     let that = this;
     this.$db.ref('users').on('value', function (snapshot) {
       if (!snapshot.val()) return;
-      that.users = snapshot.val();
+      let users = snapshot.val();
+      // remove current user from list
+      delete users[that.id];
+      that.users = users;
     });
   },
   watch: {

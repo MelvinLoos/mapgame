@@ -15,6 +15,22 @@
             v-bind:style="{color: convertIdToColor(userId)}">
             User
         </b-icon>
+      <MglPopup>
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">
+              This is you!
+            </p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              {{ coordinates[0] }}
+              <br />
+              {{ coordinates[1] }}
+            </div>
+          </div>
+        </div>
+      </MglPopup>
     </MglMarker>
     <MglMarker 
       v-for="(user, index) in users"
@@ -30,20 +46,37 @@
           v-bind:style="{color: convertIdToColor(index)}">
           User
       </b-icon>
+      <MglPopup>
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">
+              {{ user.name }}
+            </p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              {{ user.latitude }}
+              <br />
+              {{ user.longitude }}
+            </div>
+          </div>
+        </div>
+      </MglPopup>
     </MglMarker>
   </MglMap>
 </template>
 
 <script>
 import Mapbox from 'mapbox-gl';
-import { MglMap, MglMarker } from 'vue-mapbox';
+import { MglMap, MglMarker, MglPopup } from 'vue-mapbox';
 import { hashCode, intToRGB } from '../utils';
 
 export default {
   name: 'Map',
   components: {
     MglMap,
-    MglMarker
+    MglMarker,
+    MglPopup
   },
   props: {
       coordinates: Array,
