@@ -2,9 +2,9 @@ language: node_js
 node_js: 
   - "12.16.3"
 script:
-  - npm install
-  - npm build
+  - yarn install
+  - yarn build
 install:
-  - npm install -g firebase-tools
+  - yarn global install firebase-tools
 after_success:
   - firebase deploy --token $FIREBASE_TOKEN
