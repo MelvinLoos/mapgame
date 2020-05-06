@@ -5,7 +5,8 @@
     :minZoom="minZoom"
     :maxZoom="maxZoom"
     :center="coordinates"
-    :zoom="18"
+    :pitch="pitch"
+    :zoom="zoom"
     @load="onMapLoaded"
   >
     <MglMarker :coordinates="coordinates">
@@ -82,8 +83,10 @@ export default {
     return {
       accessToken: process.env.VUE_APP_MAPBOX_TOKEN,
       mapStyle: "mapbox://styles/mapbox/dark-v10",
-      minZoom: 14,
-      maxZoom: 22
+      minZoom: 15,
+      maxZoom: 22,
+      pitch: 60,
+      zoom: 18
     };
   },
   methods: {
