@@ -9,6 +9,7 @@
     :zoom="zoom"
     @load="onMapLoaded"
   >
+    <MglNavigationControl position="top-right" />
     <MglMarker :coordinates="coordinates">
       <b-icon
         icon="user-circle"
@@ -63,14 +64,15 @@
 </template>
 
 <script>
-import Mapbox from "mapbox-gl";
-import { MglMap, MglMarker, MglPopup } from "vue-mapbox";
+import { Mapbox, mapboxgl } from "mapbox-gl";
+import { MglMap, MglNavigationControl, MglMarker, MglPopup } from "vue-mapbox";
 import { hashCode, intToRGB } from "../utils";
 
 export default {
   name: "Map",
   components: {
     MglMap,
+    MglNavigationControl,
     MglMarker,
     MglPopup
   },
