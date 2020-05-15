@@ -9,6 +9,7 @@
     :zoom="zoom"
     @load="onMapLoaded"
   >
+    <MglFullscreenControl position="top-right" />
     <MglNavigationControl position="top-right" />
     <MglMarker :coordinates="coordinates">
       <b-icon
@@ -65,7 +66,7 @@
 
 <script>
 import { Mapbox, mapboxgl } from "mapbox-gl";
-import { MglMap, MglNavigationControl, MglMarker, MglPopup } from "vue-mapbox";
+import { MglMap, MglNavigationControl, MglFullscreenControl, MglMarker, MglPopup } from "vue-mapbox";
 import { hashCode, intToRGB } from "../utils";
 
 export default {
@@ -73,6 +74,7 @@ export default {
   components: {
     MglMap,
     MglNavigationControl,
+    MglFullscreenControl,
     MglMarker,
     MglPopup
   },
