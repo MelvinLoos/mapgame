@@ -35,6 +35,7 @@
 import firebase from "firebase";
 import Map from "../Map";
 import { hashCode, intToRGB } from '../../utils';
+import gsap from 'gsap';
 
 export default {
   name: "Protected",
@@ -45,7 +46,9 @@ export default {
     return {
       user: null,
       users: null,
-      movementIncrement: 0.0001
+      movementIncrement: 0.0005,
+      tweenedLatitude: 0,
+      tweenedLongitude: 0,
     };
   },
   computed: {
@@ -53,10 +56,13 @@ export default {
       return firebase.auth().currentUser.uid;
     },
     userCoordinates: function() {
-      if (this.user) {
-        return [this.user.latitude, this.user.longitude];
-      }
-      return [0, 0];
+      return [this.tweenedLatitude, this.tweenedLongitude];
+    },
+    userLatitude: function() {
+      return this.user ? this.user.latitude : 0;
+    },
+    userLongitude: function() {
+      return this.user ? this.user.longitude : 0;
     }
   },
   created: function() {
@@ -75,6 +81,18 @@ export default {
       immediate: true,
       handler(id) {
         this.$rtdbBind("user", this.$db.ref("users").child(id));
+      }
+    },
+    userLatitude: {
+      immediate: true,
+      handler(newValue) {
+        gsap.to(this.$data, { duration: 0.5,  tweenedLatitude: newValue});
+      }
+    },
+    userLongitude: {
+      immediate: true,
+      handler(newValue) {
+        gsap.to(this.$data, { duration: 0.5,  tweenedLongitude: newValue});
       }
     }
   },
