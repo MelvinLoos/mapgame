@@ -33,6 +33,24 @@ export default {
     profile: {
       type: String,
       default: 'mapbox/walking'
+    },
+    alternatives: {
+      type: Boolean,
+      default: false
+    },
+    controls: {
+      type: Object,
+      default: function() {
+        return {
+          inputs: true,
+          instructions: true,
+          profileSwitcher: true
+        }
+      }
+    },
+    flyTo: {
+      type: Boolean,
+      default: true
     }
   },
 
@@ -50,7 +68,10 @@ export default {
     this.control = new MapboxDirections({
       accessToken: this.accessToken,
       unit: this.unit,
-      profile: this.profile
+      profile: this.profile,
+      controls: this.controls,
+      alternatives: this.alternatives,
+      flyTo: this.flyTo
     });
 
     if (this.origin) {
@@ -62,7 +83,7 @@ export default {
 
     this.control.on('route', ()=>{
       try {
-        this.control.mapState()
+        this.control.mapState();
       }catch(e){
         // console.error(e);
       }
@@ -70,6 +91,19 @@ export default {
     this.control.on("results", this.$_updateInput);
 
     this.$_deferredMount();
+  },
+
+  watch: {
+    origin: {
+      handler(newValue) {
+        this.control.setOrigin(newValue);
+      }
+    },
+    destination: {
+      handler(newValue) {
+        this.control.setDestination(newValue);
+      }
+    },
   },
 
   methods: {

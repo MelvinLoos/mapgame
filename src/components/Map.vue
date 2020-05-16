@@ -14,7 +14,9 @@
     <MglDirectionsControl 
       position="top-left" 
       :accessToken="accessToken"
-      :origin="coordinates"
+      :origin="[coordinates[0], coordinates[1]]"
+      :alternatives="false"
+      :flyTo="false"
     />
 
 
