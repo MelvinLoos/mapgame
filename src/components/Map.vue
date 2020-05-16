@@ -112,6 +112,7 @@ export default {
     onMapLoaded(event) {
       // in component
       this.map = event.map;
+      this.map.flyTo(this.coordinates);
       // Insert the layer beneath any symbol layer.
       var layers = this.map.getStyle().layers;
 
