@@ -11,6 +11,13 @@
   >
     <MglFullscreenControl position="top-right" />
     <MglNavigationControl position="top-right" />
+    <MglDirectionsControl 
+      position="top-left" 
+      :accessToken="accessToken"
+      :origin="coordinates"
+    />
+
+
     <MglMarker :coordinates="coordinates">
       <b-icon
         icon="user-circle"
@@ -66,15 +73,17 @@
 
 <script>
 import { Mapbox, mapboxgl } from "mapbox-gl";
-import { MglMap, MglNavigationControl, MglFullscreenControl, MglMarker, MglPopup } from "vue-mapbox";
+import { MglMap, MglFullscreenControl, MglNavigationControl, MglMarker, MglPopup } from "vue-mapbox";
+import MglDirectionsControl from "./mapbox/DirectionsControl";
 import { hashCode, intToRGB } from "../utils";
 
 export default {
   name: "Map",
   components: {
     MglMap,
-    MglNavigationControl,
     MglFullscreenControl,
+    MglNavigationControl,
+    MglDirectionsControl,
     MglMarker,
     MglPopup
   },
@@ -159,4 +168,5 @@ export default {
 
 <style scoped>
 @import "~mapbox-gl/dist/mapbox-gl.css";
+@import '~@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 </style>

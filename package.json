@@ -11,6 +11,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@fortawesome/vue-fontawesome": "^0.1.6",
+    "@mapbox/mapbox-gl-directions": "^4.0.3",
     "buefy": "^0.7.7",
     "core-js": "^2.6.5",
     "firebase": "^7.14.2",
