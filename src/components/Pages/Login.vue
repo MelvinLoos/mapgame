@@ -1,54 +1,42 @@
 <template>
-  <div class="container">
-    <div class="columns is-desktop">
-      <div class="column is-half is-offset-one-quarter">
-        <div class="card" style="margin-top:50px;">
-          <div class="card-content">
-            <h2 class="title is-2">Login</h2>
+  <b-container class="w-25 h-50 m-auto pt-5">
+    <b-card
+      title="Login">
+      <b-card-text>
+        <b-form @submit.stop.prevent="login">
+          <b-form-group>
+            <b-form-input
+              name="email"
+              type="email"
+              placeholder="Email"
+              v-model="email"
+              ></b-form-input>
+          </b-form-group>
+          <b-form-group>
+              <b-form-input
+                name="password"
+                type="password"
+                placeholder="Password"
+                v-model="password"
+                v-on:keyup.enter="login"
+                ></b-form-input>
+          </b-form-group>
+          <b-button type="submit" variant="primary">Login</b-button>
+        </b-form>
 
-            <div class="field">
-              <p class="control has-icons-left has-icons-right">
-                <input class="input" type="email" placeholder="Email" v-model="email">
-                <span class="icon is-small is-left">
-                  <i class="fa fa-envelope"></i>
-                </span>
-                <span class="icon is-small is-right">
-                  <i class="fa fa-check"></i>
-                </span>
-              </p>
-            </div>
-            <div class="field">
-              <p class="control has-icons-left">
-                <input
-                  class="input"
-                  type="password"
-                  placeholder="Password"
-                  v-model="password"
-                  v-on:keyup.enter="login">
-                <span class="icon is-small is-left">
-                  <i class="fa fa-lock"></i>
-                </span>
-              </p>
-            </div>
-            <div class="field">
-              <p class="control">
-                <button @click="login" class="button is-success">Login</button>
-              </p>
-            </div>
+        <div class="pt-2">
+          <p>
+            Don't have an account?
+            <router-link to="/sign-up">Create one!</router-link>
+          </p>
 
-            <p>
-              Don't have an account?
-              <router-link to="/sign-up">Create one!</router-link>
-            </p>
-
-            <p>
-              <a @click="resetPassword">Reset password</a>
-            </p>
-          </div>
+          <p>
+            <b-button variant="secondary" @click="resetPassword">Reset password</b-button>
+          </p>
         </div>
-      </div>
-    </div>
-  </div>
+      </b-card-text>
+    </b-card>
+  </b-container>
 </template>
 
 <script>

@@ -1,32 +1,34 @@
 <template>
   <MglMap
     :accessToken="accessToken"
-    :mapStyle="mapStyle"
+    :mapStyle.sync="mapStyle"
     :minZoom="minZoom"
     :maxZoom="maxZoom"
     :center="coordinates"
     :pitch="pitch"
     :zoom="zoom"
     @load="onMapLoaded"
+    ref="map"
+    :attributionControl="false"
   >
     <MglFullscreenControl position="top-right" />
-    <MglNavigationControl position="top-right" />
-    <MglDirectionsControl 
+    <!-- <MglNavigationControl position="top-right" /> -->
+    <!-- <MglDirectionsControl 
       position="top-left" 
       :accessToken="accessToken"
       :origin="[coordinates[0], coordinates[1]]"
       :alternatives="false"
       :flyTo="false"
-    />
+    /> -->
 
 
-    <MglMarker :coordinates="coordinates">
-      <b-icon
-        icon="user-circle"
-        size="is-medium"
+    <MglMarker :coordinates.sync="coordinates">
+      <font-awesome-icon
+        icon="user"
+        size="2x"
         slot="marker"
         v-bind:style="{color: convertIdToColor(userId)}"
-      >User</b-icon>
+      >User</font-awesome-icon>
       <MglPopup>
         <div class="card">
           <header class="card-header">
@@ -43,18 +45,18 @@
       </MglPopup>
     </MglMarker>
     <MglMarker
-      v-for="(user, index) in users"
+      v-for="(user, index) in otherUsers"
       v-bind:item="user"
       v-bind:index="index"
       v-bind:key="user.id"
       v-bind:coordinates="[user.latitude, user.longitude]"
     >
-      <b-icon
+      <font-awesome-icon
         icon="user-circle"
-        size="is-medium"
+        size="2x"
         slot="marker"
         v-bind:style="{color: convertIdToColor(index)}"
-      >User</b-icon>
+      >User</font-awesome-icon>
       <MglPopup>
         <div class="card">
           <header class="card-header">
@@ -70,12 +72,13 @@
         </div>
       </MglPopup>
     </MglMarker>
+    <MglAttributionControl :compact="true" position="bottom-right" />
   </MglMap>
 </template>
 
 <script>
 import { Mapbox, mapboxgl } from "mapbox-gl";
-import { MglMap, MglFullscreenControl, MglNavigationControl, MglMarker, MglPopup } from "vue-mapbox";
+import { MglMap, MglFullscreenControl, MglAttributionControl, MglNavigationControl, MglMarker, MglPopup } from "vue-mapbox";
 import MglDirectionsControl from "./mapbox/DirectionsControl";
 import { hashCode, intToRGB } from "../utils";
 
@@ -84,15 +87,17 @@ export default {
   components: {
     MglMap,
     MglFullscreenControl,
-    MglNavigationControl,
-    MglDirectionsControl,
+    MglAttributionControl,
+    // TODO: implement navigation using cloud functions
+    // MglNavigationControl,
+    // MglDirectionsControl,
     MglMarker,
     MglPopup
   },
   props: {
     coordinates: Array,
     userId: String,
-    users: Object
+    otherUsers: Object
   },
   data() {
     return {
@@ -165,6 +170,7 @@ export default {
   created() {
     // We need to set mapbox-gl library here in order to use it in template
     this.mapbox = Mapbox;
+    this.map = null;
   }
 };
 </script>

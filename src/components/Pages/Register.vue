@@ -1,90 +1,121 @@
 <template>
-  <div class="container">
-    <div class="columns is-mobile">
-      <div class="column is-half is-offset-one-quarter">
-        <div class="card" style="margin-top:50px;">
-          <div class="card-content">
-            <h2 class="title is-2">Create an Account</h2>
-            <ValidationObserver ref="observer" v-slot="{ passes }">
-              <section class="section">
-                <h3 class="title is-3">Account</h3>
+  
+  <b-container class="w-25 h-50 m-auto pt-5">
+    <b-card
+      title="Create an Account">
+      <b-card-text>
+        <ValidationObserver ref="observer" v-slot="{ passes }">
+          <b-form @submit.stop.prevent="handleSubmit(register)">
+            <section class="section">
+              <h3>Account</h3>
 
-                <ValidationProvider name="email" rules="required|email" v-slot="{ errors, valid }">
-                  <b-field
-                    label="Email"
-                    :type="{ 'is-danger': errors[0], 'is-success': valid }"
-                    :message="errors"
-                  >
-                    <b-input type="email" placeholder="youremail@email.com" v-model="email"></b-input>
-                  </b-field>
-                </ValidationProvider>
-
-                <ValidationObserver>
-                  <ValidationProvider rules="required|min:6|password:@confirm" v-slot="{ errors, valid }">
-                    <b-field
-                      label="Password"
-                      :type="{ 'is-danger': errors[0], 'is-success': valid }"
-                      :message="errors"
-                    >
-                      <b-input type="password" v-model="password"></b-input>
-                    </b-field>
-                  </ValidationProvider>
-                  <ValidationProvider name="confirm" rules="required" v-slot="{ errors, valid }">
-                    <b-field
-                      label="Verify Password"
-                      :type="{ 'is-danger': errors[0], 'is-success': valid }"
-                      :message="errors"
-                    >
-                      <b-input type="password" v-model="verifyPassword"></b-input>
-                    </b-field>
-                  </ValidationProvider>
-                </ValidationObserver>
-              </section>
-
-              <section class="section">
-                <h3 class="title is-3">Character</h3>
-
-                <ValidationProvider name="name" rules="required" v-slot="{ errors, valid }">
-                  <b-field
-                    label="Name"
-                    :type="{ 'is-danger': errors[0], 'is-success': valid }"
-                    :message="errors"
-                  >
-                    <b-input type="text" placeholder="Joe Doe" v-model="name"></b-input>
-                  </b-field>
-                </ValidationProvider>
-                <ValidationProvider
-                  name="startingLocation"
-                  rules="required|startingLocation"
-                  v-slot="{ errors, valid }"
+              <ValidationProvider
+                name="email"
+                rules="required|email"
+                v-slot="validationContext"
+              >
+                <b-form-group
+                  label="Email"
+                  label-for="input-email"
                 >
-                  <b-field
-                    label="Choose starting location"
-                    :type="{ 'is-danger': errors[0], 'is-success': valid }"
-                    :message="errors"
-                  >
-                    <b-select placeholder="Select a location" v-model="startingLocation">
-                      <option
-                        v-for="location in locations"
-                        :value="location.coordinate"
-                        :key="location.id"
-                      >{{ location.name }}</option>
-                    </b-select>
-                  </b-field>
-                </ValidationProvider>
-              </section>
+                  <b-form-input
+                    id="input-email"
+                    type="email"
+                    placeholder="youremail@email.com"
+                    v-model="email"
+                    :state="getValidationState(validationContext)"
+                    aria-describedby="input-email-feedback"
+                  ></b-form-input>
+                  <b-form-invalid-feedback id="input-email-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                </b-form-group>
+              </ValidationProvider>
 
-              <div class="field">
-                <p class="control">
-                  <button @click="passes(register)" class="button is-success">Sign Up</button>
-                </p>
-              </div>
-            </ValidationObserver>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+              <ValidationProvider rules="required|min:6|password:@confirm" v-slot="validationContext">
+                <b-form-group
+                  label="Password"
+                  label-for="input-password"
+                >
+                  <b-form-input
+                    id="input-password"
+                    type="password"
+                    v-model="password"
+                    :state="getValidationState(validationContext)"
+                    aria-describedby="input-password-feedback"
+                  ></b-form-input>
+                  <b-form-invalid-feedback id="input-password-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                </b-form-group>
+              </ValidationProvider>
+
+              <ValidationProvider name="confirm" rules="required" v-slot="validationContext">
+                <b-form-group
+                  label="Verify Password"
+                  label-for="input-password-verify"
+                >
+                  <b-form-input
+                    id="input-password-verify"
+                    type="password"
+                    v-model="verifyPassword"
+                    :state="getValidationState(validationContext)"
+                    aria-describedby="input-password-verify-feedback"
+                  ></b-form-input>
+                  <b-form-invalid-feedback id="input-password-verify-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                </b-form-group>
+              </ValidationProvider>
+            </section>
+
+            <section class="section">
+              <h3 class="title is-3">Character</h3>
+
+              <ValidationProvider name="name" rules="required" v-slot="validationContext">
+                <b-form-group
+                  label="Name"
+                  label-for="input-name"
+                >
+                  <b-form-input
+                    id="input-name"
+                    type="text"
+                    placeholder="Joe Doe"
+                    v-model="name"
+                    :state="getValidationState(validationContext)"
+                    aria-describedby="input-name-feedback"
+                  ></b-form-input>
+                  <b-form-invalid-feedback id="input-name-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                </b-form-group>
+              </ValidationProvider>
+
+              <ValidationProvider
+                name="startingLocation"
+                rules="required|startingLocation"
+                v-slot="validationContext"
+              >
+                <b-form-group
+                  label="Choose starting location"
+                  label-for="input-location"
+                >
+                  <b-select
+                    id="input-location"
+                    placeholder="Select a location"
+                    v-model="startingLocation"
+                    :state="getValidationState(validationContext)"
+                    aria-describedby="input-location-feedback"
+                  >
+                    <option
+                      v-for="location in locations"
+                      :value="location.coordinate"
+                      :key="location.id"
+                    >{{ location.name }}</option>
+                  </b-select>
+                  <b-form-invalid-feedback id="input-location-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                </b-form-group>
+              </ValidationProvider>
+            </section>
+
+            <b-button type="submit" variant="primary" @click="passes(register)">Sign Up</b-button>
+          </b-form>
+        </ValidationObserver>
+      </b-card-text>
+    </b-card>
+  </b-container>
 </template>
 
 <script>
@@ -117,6 +148,9 @@ export default {
   methods: {
     isValidPassword() {
       return this.password === this.verifyPassword || false;
+    },
+    getValidationState({ dirty, validated, valid = null }) {
+      return dirty || validated ? valid : null;
     },
     register() {
       if (this.isValidPassword()) {

@@ -1,37 +1,25 @@
 <template>
-  <div id="app">
-    <nav id="topmenu" class="navbar" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="navbar-item" href="/">
-          <b>The Game</b> <span><i>You lost</i></span>
-        </a>
-        <!-- eslint-disable-next-line -->
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarTopMenu" v-on:click="showNav = !showNav" v-bind:class="{ 'is-active' : showNav }">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
-      <div id="navbarTopMenu" class="navbar-menu" v-bind:class="{ 'is-active' : showNav }">
-        <div class="navbar-start">
-        </div>
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <a v-if="authenticated" class="button" @click="logout">Logout</a>
-              <span v-else>
-                <router-link class="button is-primary" to="/sign-up">
-                  <strong>Sign up</strong>
-                </router-link>
-                <router-link class="button is-light" to='/'>Login</router-link>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
+  <b-container fluid class="px-0 bg-dark" id="app">
+    <b-navbar toggleable="lg" type="dark" variant="dark">
+      <b-navbar-brand href="#">
+        <b>The Game</b> <span><i>You lost</i></span>
+      </b-navbar-brand>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav v-if="authenticated" class="ml-auto">
+          <b-nav-item class="button" @click="logout">Logout</b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav v-else class="ml-auto">
+          <b-nav-item class="button is-primary" to="/sign-up">
+            <strong>Sign up</strong>
+          </b-nav-item>
+          <b-nav-item class="button is-light" to='/'>Login</b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
     <router-view class="content" />
-  </div>
+  </b-container>
 </template>
 
 <script>

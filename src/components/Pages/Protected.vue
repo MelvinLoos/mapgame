@@ -1,33 +1,36 @@
 <template>
   <div>
+    <!-- <b-menu>
+      <b-menu-list label="Menu">
+        <b-menu-item icon="suitcase" label="Inventory"></b-menu-item>
+      </b-menu-list>
+    </b-menu> -->
     <Map 
       id="gamemap"
       :coordinates="userCoordinates"
       :userId="id"
-      :users="users"
+      :otherUsers="otherUsers"
     />
-    <nav id="actionbar-bottom" class="navbar" role="navigation" aria-label="game navigation">
-      <div class="navbar-menu is-active">
-        <div class="navbar-start">
-          <div class="navbar-item is-expanded">
-            <div class="buttons has-addons is-centered">
-              <button v-on:click="moveLeft" class="button">
-                Left
-              </button>
-              <button v-on:click="moveUp" class="button">
-                Up
-              </button>
-              <button v-on:click="moveDown" class="button">
-                Down
-              </button>
-              <button v-on:click="moveRight" class="button">
-                Right
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
+    
+    <b-container class="pt-4 text-center">
+      <b-button-group>
+        <b-button v-on:click="moveLeft">
+          Left
+        </b-button>
+        <b-button v-on:click="moveUp">
+          Up
+        </b-button>
+        <b-button v-on:click="moveDown">
+          Down
+        </b-button>
+        <b-button v-on:click="moveRight">
+          Right
+        </b-button>
+      </b-button-group>
+      <b-button v-on:click="centerView" class="mx-2">
+        Center
+      </b-button>
+    </b-container>
   </div>
 </template>
 
@@ -45,10 +48,11 @@ export default {
   data() {
     return {
       user: null,
-      users: null,
+      otherUsers: null,
       movementIncrement: 0.0005,
       tweenedLatitude: 0,
       tweenedLongitude: 0,
+      menuOpen: true
     };
   },
   computed: {
@@ -63,7 +67,7 @@ export default {
     },
     userLongitude: function() {
       return this.user ? this.user.longitude : 0;
-    }
+    },
   },
   created: function() {
     let that = this;
@@ -72,7 +76,15 @@ export default {
       let users = snapshot.val();
       // remove current user from list
       delete users[that.id];
-      that.users = users;
+      if (that.otherUsers) {
+        for (let userId in users) {
+          if (that.otherUsers.hasOwnProperty(userId)) {
+            gsap.to(that.$data, { duration: 0.5,  latitude: users[userId].latitude});
+            gsap.to(that.$data, { duration: 0.5,  longitude: users[userId].longitude});
+          }
+        };
+      }
+      that.otherUsers = users;
     });
   },
   watch: {
@@ -117,6 +129,9 @@ export default {
       this.$db.ref("users/" + this.id).update({ latitude: Number(this.user.latitude) + this.movementIncrement }).then(() => {
       })
     },
+    centerView() {
+      console.log('TODO: implement center function');
+    },
     logout() {
       firebase
         .auth()
@@ -138,7 +153,7 @@ export default {
 <style scoped>
 #gamemap
 {
-  width: 100%;
+  
   height: 90%;
   position: relative;
   top: 0;
