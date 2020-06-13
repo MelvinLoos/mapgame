@@ -1,41 +1,47 @@
 <template>
-  <b-container class="w-25 h-50 m-auto pt-5">
-    <b-card
-      title="Login">
-      <b-card-text>
-        <b-form @submit.stop.prevent="login">
-          <b-form-group>
-            <b-form-input
-              name="email"
-              type="email"
-              placeholder="Email"
-              v-model="email"
-              ></b-form-input>
-          </b-form-group>
-          <b-form-group>
-              <b-form-input
-                name="password"
-                type="password"
-                placeholder="Password"
-                v-model="password"
-                v-on:keyup.enter="login"
-                ></b-form-input>
-          </b-form-group>
-          <b-button type="submit" variant="primary">Login</b-button>
-        </b-form>
+  <b-container class="h-50 m-auto pt-5">
+    <b-row>
+      <b-col></b-col>
+      <b-col md="5">
+        <b-card
+          title="Login">
+          <b-card-text>
+            <b-form @submit.stop.prevent="login">
+              <b-form-group>
+                <b-form-input
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  v-model="email"
+                  ></b-form-input>
+              </b-form-group>
+              <b-form-group>
+                  <b-form-input
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    v-model="password"
+                    v-on:keyup.enter="login"
+                    ></b-form-input>
+              </b-form-group>
+              <b-button type="submit" variant="primary">Login</b-button>
+            </b-form>
 
-        <div class="pt-2">
-          <p>
-            Don't have an account?
-            <router-link to="/sign-up">Create one!</router-link>
-          </p>
+            <div class="pt-2">
+              <p>
+                Don't have an account?
+                <router-link to="/sign-up">Create one!</router-link>
+              </p>
 
-          <p>
-            <b-button variant="secondary" @click="resetPassword">Reset password</b-button>
-          </p>
-        </div>
-      </b-card-text>
-    </b-card>
+              <p>
+                <b-button variant="secondary" @click="resetPassword">Reset password</b-button>
+              </p>
+            </div>
+          </b-card-text>
+        </b-card>
+      </b-col>
+      <b-col></b-col>
+    </b-row>
   </b-container>
 </template>
 

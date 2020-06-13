@@ -1,18 +1,32 @@
 <template>
   <div>
-    <!-- <b-menu>
-      <b-menu-list label="Menu">
-        <b-menu-item icon="suitcase" label="Inventory"></b-menu-item>
-      </b-menu-list>
-    </b-menu> -->
-    <Map 
+    <b-sidebar
+      id="sidebar-inventory"
+      title="Inventory"
+      shadow
+      width="30%"
+      bg-variant="dark"
+      text-variant="light"
+    >
+      <div>
+
+      </div>
+    </b-sidebar>
+
+    <b-nav vertical justified id="sidebar">
+      <b-nav-item v-b-toggle.sidebar-inventory>
+        <font-awesome-icon icon="suitcase">Inventory</font-awesome-icon>
+      </b-nav-item>
+    </b-nav>
+    
+    <Map
       id="gamemap"
       :coordinates="userCoordinates"
       :userId="id"
       :otherUsers="otherUsers"
     />
     
-    <b-container class="pt-4 text-center">
+    <b-container class="pt-2 text-center">
       <b-button-group>
         <b-button v-on:click="moveLeft">
           Left
@@ -151,13 +165,22 @@ export default {
 </script>
 
 <style scoped>
-#gamemap
+#sidebar
 {
-  
-  height: 90%;
+  width: 3%;
   position: relative;
   top: 0;
   left: 0;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+}
+
+#gamemap
+{
+  width: 97%;
+  height: 90%;
+  display: inline-block;
 }
 
 #actionbar-bottom

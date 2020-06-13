@@ -1,6 +1,6 @@
 <template>
   <b-container fluid class="px-0 bg-dark" id="app">
-    <b-navbar toggleable="lg" type="dark" variant="dark">
+    <b-navbar id="navbar-top" toggleable="lg" type="dark" variant="dark">
       <b-navbar-brand href="#">
         <b>The Game</b> <span><i>You lost</i></span>
       </b-navbar-brand>
@@ -18,7 +18,7 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <router-view class="content" />
+    <router-view id="content" />
   </b-container>
 </template>
 
@@ -78,25 +78,13 @@ export default {
 <style lang="scss">
 $fa-font-path: "~font-awesome/fonts";
 
-html, body
-{
-  height: 100%;
-  overflow: hidden;
-}
-
-#app
+html, body, #app
 {
   height: 100%;
 }
 
-#topmenu
+#content
 {
-  height: 7%
-}
-
-.content
-{
-  position: relative;
-  height: 93%;
+  height: 90%
 }
 </style>
